@@ -1,7 +1,8 @@
 package com.example.webf.user;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +10,22 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired private UserRepository repo;
+    @Autowired
+    private UserRepository repo;
+
+    PasswordEncoder passwordEncoder;
 
     public List<User> listAll() {
         return (List<User>) repo.findAll();
     }
 
+    public UserService(UserRepository repo){
+        this.repo = repo;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
     public void save(User user) {
+        String encoded = this.passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoded);
         repo.save(user);
     }
 

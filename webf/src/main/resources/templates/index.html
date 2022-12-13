@@ -6,9 +6,22 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
+<div>
+    <button type="button" class="btn btn-secondary m-1" onclick="logOut()">Log Out</button>
+</div>
 <div class="container-fluid text-center">
     <h1>Welcome to my CRUD Web Application!</h1>
-    <a class="h2" th:href="@{/users}">Manage users</a>
+    <h2>You can only view the table as a USER:</h2>
+    <a class="h3" th:href="@{/users}">View users</a>
+</div><div class="container-fluid text-center">
+    <h2>And you can also edit it as an ADMIN: </h2>
+    <a class="h3" th:href="@{/admin}">Manage users</a>
 </div>
+
+<script type="text/javascript">
+    function logOut(){
+        window.location= "[[@{/logout}]]";
+    }
+</script>
 </body>
 </html>

@@ -19,25 +19,32 @@ public class UserController {
         List<User> listUsers = service.listAll();
         model.addAttribute("listUsers",listUsers);
 
+        return "only_users";
+    }
+    @GetMapping("/admin")
+    public String showUsersList(Model model) {
+        List<User> listUsers = service.listAll();
+        model.addAttribute("listUsers",listUsers);
+
         return "users";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/admin/new")
     public String showNewForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Add New User");
         return "user_form";
     }
 
-    @PostMapping("/users/save")
+    @PostMapping("/admin/save")
     public String saveUser(User user, RedirectAttributes ra) {
         service.save(user);
         ra.addFlashAttribute("message","The user has been saved successfully.");
 
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/admin/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             User user = service.get(id);
@@ -47,21 +54,18 @@ public class UserController {
 
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
-            return "redirect:/users";
+            return "redirect:/admin";
         }
     }
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             service.delete(id);
-            ra.addFlashAttribute("message", "The user ID " + id + "has been deleted.");
+            ra.addFlashAttribute("message", "The user ID " + id + " has been deleted.");
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message",e.getMessage());
         }
-        return "redirect:/users";
-
+        return "redirect:/admin";
     }
-
-
 }

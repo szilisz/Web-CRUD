@@ -9,14 +9,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false,unique = true,length = 45)
-    private String email;
-    @Column(length = 15, nullable = false)
+    private String username;
+    @Column(length = 255, nullable = false)
     private String password;
-    @Column(length = 45, nullable = false, name="first_name")
+    @Column(length = 45, nullable = false)
     private String firstName;
-    @Column(length = 45,nullable = false,name="last_name")
+    @Column(length = 45,nullable = false)
     private String lastName;
-
+    @Column(length = 10, nullable = false)
+    private String role;
     private boolean enabled;
 
     public Integer getId() {
@@ -27,12 +28,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -65,5 +66,26 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }
